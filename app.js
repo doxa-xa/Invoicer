@@ -6,9 +6,12 @@ const session = require('express-session')
 const sessionStore = require('./utils/database').sessionStore
 const passport = require('passport')
 const app = express()
-
+const viewsPath = path.join(__dirname,'./views')
 const assetsPath = path.join(__dirname,'./public')
-app.use(express.static(assetsPath))
+const partialsPath = path.join(__dirname,'./views/partials')
+
+
+app.use('/public',express.static(assetsPath))
 app.use(session({
     secret:'whatLiesBeyondTheCoridor?',
     resave:false,
@@ -23,7 +26,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.urlencoded({extended:false}))
 app.set('view engine','hbs')
-app.set('views','./views')
+app.set('views',viewsPath)
+hbs.registerPartials(partialsPath)
 
 require('./utils/routing')(app)
 // app.get('/',(req,res,next)=>{

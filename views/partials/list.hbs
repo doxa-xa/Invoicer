@@ -1,0 +1,13 @@
+{{#each data}}
+<div>
+    <ul>
+        <li>Company: {{this.company}}</li>
+        <li>UIC: {{this.uic}}</li>
+        <li>VAT: {{this.vat}}</li>
+        <li>Address: {{this.address}}</li>
+        <li>Contact: {{this.contact}}</li>
+        <li>E-mail: {{this.email}}</li>
+    </ul>
+    <a href="/issue">Issue an invoice</a>
+</div>
+{{/each}}

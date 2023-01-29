@@ -1,0 +1,35 @@
+body,a {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0%;
+    background-color: darkslategray;
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    background-color: white;
+}
+
+header,nav {
+    background-color: white;
+    color: darkslategray;
+    margin: 0px 0px;
+    display: flex;
+    justify-content: space-between;
+
+}
+h1{
+    margin-top: 0px;
+}
+p{
+    color: white;
+}
+main,form{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+div{
+    border: solid 1px white;
+    margin-bottom: 5%;
+}

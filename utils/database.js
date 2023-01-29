@@ -30,6 +30,15 @@ const CompanySchema = new mongoose.Schema({
     salt:String
 })
 
+const ClientSchema = new mongoose.Schema({
+    company:String,
+    uic:String,
+    vat:String,
+    address:String,
+    contact:String,
+    email:String,
+})
+
 const sessionStore = new MongoStore({
     mongooseConnection:connectMongoStore,
     collection:'sessions'
@@ -37,7 +46,7 @@ const sessionStore = new MongoStore({
 
 
 const Company = mongoose.model('Company',CompanySchema)
+const Client = mongoose.model('Client',ClientSchema)
 
-
-module.exports = {sessionStore,Company}
+module.exports = {sessionStore,Company,Client}
 

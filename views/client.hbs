@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles.css">
+    <title>{{user}} welcome to invoicer</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to invoicer {{user}}</h1>
+        
+    </header>
+    <nav>
+        <a href="/add">Add Client</a>
+        <a href="/list">List of issued Invoices</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <main>
+        <form action="/client" method="post">
+            <input type="text" name="companyName" placeholder="Company Name"><br>
+            <input type="text" name="uic" id="uic" placeholder="UIC"><br>
+            <input type="text" name="vat" id="vat" placeholder="VAT"><br>
+            <input type="text" name="address" id="address" placeholder="address"><br>
+            <input type="text" name="contact" id="contact" placeholder="Name of contact"><br>
+            <input type="email" name="email" id="email" placeholder="e-mail"><br>
+            <input type="submit" value="Register">
+        </form>
+    </main>
+    <footer>
+        <p>Created by Stoyan Todorov ®{{date}}</p>
+    </footer>
+</body>
+</html>
