@@ -1,15 +1,27 @@
 const express = require('express')
 const hbs = require('hbs')
 const path = require('path')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const sessionStore = require('./utils/database').sessionStore
 const app = express()
-require('./utils/routing')(app)
-const assetsPath = path.join(__dirname,'./public')
 
+const assetsPath = path.join(__dirname,'./public')
 app.use(express.static(assetsPath))
+app.use(session({
+    secret:'whatLiesBeyondTheCoridor?',
+    resave:false,
+    saveUninitialized:true,
+    store:sessionStore,
+    cookie:{
+        maxAge: 1000*60*60*24
+    }
+}))
+app.use(bodyParser.urlencoded({extended:false}))
 app.set('view engine','hbs')
 app.set('views','./views')
 
-
+require('./utils/routing')(app)
 // app.get('/',(req,res,next)=>{
 //     res.send('Express app active')
 // })
