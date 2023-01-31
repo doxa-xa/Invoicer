@@ -21,6 +21,20 @@
         <h2>List of partners:</h2>
        {{> list}}
     </main>
+    <script type="text/javascript" >
+        var divs = document.getElementsByTagName('div');
+        var inputs = document.getElementsByTagName('input');
+        setTimeout(selectLinks(),4000);
+        function selectLinks(){
+            for(i=0;i<divs.length;i++){
+                let uic = inputs[i].value
+                let a = divs[i].lastElementChild.getAttribute('href');
+                let query = `${a}?uic=${uic}`;
+                divs[i].lastElementChild.setAttribute('href',query);
+                console.log(query);
+            }
+        }
+    </script>
     <footer>
         <p>Created by Stoyan Todorov ®{{date}}</p>
     </footer>

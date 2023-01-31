@@ -39,6 +39,33 @@ const ClientSchema = new mongoose.Schema({
     email:String,
 })
 
+const InvoiceSchema = new mongoose.Schema({
+   number:String,
+   issueDate:Date,
+   placeOfDeal:String,
+   paymentType:{
+    bank:Boolean,
+    cash:Boolean
+   },
+   items:[],
+   clientDetails:{
+    company:String,
+    uic:String,
+    vat:String,
+    address:String,
+    contact:String
+   },
+   companyDetails:{
+    company:String,
+    uic:String,
+    vat:String,
+    address:String,
+    contact:String
+   }
+})
+
+
+
 const sessionStore = new MongoStore({
     mongooseConnection:connectMongoStore,
     collection:'sessions'
@@ -47,6 +74,6 @@ const sessionStore = new MongoStore({
 
 const Company = mongoose.model('Company',CompanySchema)
 const Client = mongoose.model('Client',ClientSchema)
-
-module.exports = {sessionStore,Company,Client}
+const Invoice = mongoose.model('Invoice',InvoiceSchema)
+module.exports = {sessionStore,Company,Client,Invoice}
 

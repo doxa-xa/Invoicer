@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles.css">
+    <title>Issue invoice</title>
+
+</head>
+<body>
+     <header>
+        <h1>Enter Invoice Details</h1><br>
+        <h2>Number: </h2>
+    </header>
+    <main>
+        <form id="foo" action="/issue" method="post" >
+            <label for="issueDate">Select Date of issue</label><br>
+            <input type="date" name="issueDate" id="date">
+            <input id="issue" type="submit" value="Issue"><br>
+            <label for="placeOfDeal">City</label><br>
+            <input type="text" name="placeOfDeal" id="placeOfDeal" placeholder="Place of Deal"><br>
+            <p>Type of payment</p>
+            <label for="cash">Cash</label>
+            <input type="radio" name="cash" id="cash">
+            <label for="bank">Bank</label>
+            <input type="radio" name="bank" id="bank"><br>
+            <input id="vat" type="number" name="vat" placeholder="VAT in %"><br>
+            <div id="itemPricing">
+                <input class="item" type="text" placeholder="Item" width="100">
+                <input class="qty" type="number" placeholder="Quantity" width="20">
+                <input class="pricePerItem" type="number" placeholder="Price per item" width="30" id="price"><br>
+            </div>
+            <input id="client" type="text" style="display: none;" name="clientUIC" value={{uic}}>
+        </form>
+        <button id="add">Add Item</button>
+        <script type="text/javascript">
+            var btn = document.getElementById('add');
+            var foo = document.getElementById('foo');
+            var issue = document.getElementById('issue');
+            var count = 1;
+            var items = [];
+            var client = document.getElementById('client').value;
+            btn.addEventListener('click',(e)=>{
+                e.preventDefault();
+                
+                addItem(count,foo);
+                count++;
+            })
+            function addItem(count,element){
+                var div = document.createElement('div');
+                var item = document.createElement('input');
+                
+                item.setAttribute('class',`item`);
+                item.setAttribute('placeholder',`item${count.toString()}`)
+                var qty = document.createElement('input');
+                qty.setAttribute('class',`qty`);
+                qty.setAttribute('type','number');
+                qty.setAttribute('placeholder',`Quantity`)
+                var price = document.createElement('input');
+                price.setAttribute('class',`pricePerItem`);
+                price.setAttribute('type','number');
+                price.setAttribute('placeholder',`Price per item`)
+                div.appendChild(item);
+                div.appendChild(qty);
+                div.appendChild(price);
+                element.appendChild(div);
+            }
+
+            issue.addEventListener('click',(e)=>{
+                e.preventDefault();
+                let item = document.getElementsByClassName('item');
+                let qty = document.getElementsByClassName('qty');
+                let pricePerItem = document.getElementsByClassName('pricePerItem');
+
+                for(i=0;i<item.length;i++){
+                    items.push({
+                        item:item[i].value,
+                        qty:qty[i].value,
+                        pricePerItem:pricePerItem[i].value
+                    })
+                    console.log(client);
+                }
+                let data = {
+                    date:document.getElementById('date').value,
+                    placeOfdeal:document.getElementById('placeOfDeal').value,
+                    typeOfpayment:{
+                        cash:document.getElementById('cash').value,
+                        bank:document.getElementById('bank').value
+                    },
+                    vat:document.getElementById('vat').value,
+                    items:items,
+                    clientUIC:client
+                }
+                var request = new XMLHttpRequest();
+                request.open('POST','http://localhost:3000/issue', true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                request.onreadystatechange = function() {if (request.readyState==4) alert("It worked!");
+                    stateChanged(request);
+                };
+                
+                request.send(JSON.stringify(data));
+            })
+        </script>
+    </main>
+</body>
+</html>

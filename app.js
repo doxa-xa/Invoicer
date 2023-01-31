@@ -36,3 +36,4 @@ require('./utils/routing')(app)
 app.listen(3000,(res)=>{
     console.log('Listening on port 3000')
 })
+
