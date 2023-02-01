@@ -40,8 +40,11 @@ const ClientSchema = new mongoose.Schema({
 })
 
 const InvoiceSchema = new mongoose.Schema({
-   number:String,
    issueDate:Date,
+   invoiceNumber:{
+    type:String,
+    required:true
+   },
    placeOfDeal:String,
    paymentType:{
     bank:Boolean,

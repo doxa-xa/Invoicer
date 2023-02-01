@@ -32,17 +32,8 @@ const calc ={
             cash:false,
             bank:true
         }
-    },
-    number(uic){
-        Invoice.find({uic:uic})
-        .then((result)=>{
-            var num=1
-            if((!result)||(result.length===0)){
-                return num.toString().padStart(10,'0')
-            }else{
-                return result.length.toString().padStart(10,'0')
-            }
-        })
     }
+  
+    
 }
 module.exports = calc

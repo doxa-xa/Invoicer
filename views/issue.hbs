@@ -11,7 +11,7 @@
 <body>
      <header>
         <h1>Enter Invoice Details</h1><br>
-        <h2>Number: </h2>
+        <h2>Number: {{number}}</h2>
     </header>
     <main>
         <form id="foo" action="/issue" method="post" >
@@ -26,6 +26,7 @@
             <label for="bank">Bank</label>
             <input type="radio" name="bank" id="bank"><br>
             <input id="vat" type="number" name="vat" placeholder="VAT in %"><br>
+            <input id="invNumber" name="invNumber" type="number" style="display: none;" value={{number}} >
             <div id="itemPricing">
                 <input class="item" type="text" placeholder="Item" width="100">
                 <input class="qty" type="number" placeholder="Quantity" width="20">
@@ -83,6 +84,7 @@
                 }
                 let data = {
                     date:document.getElementById('date').value,
+                    number:document.getElementById('invNumber').value,
                     placeOfdeal:document.getElementById('placeOfDeal').value,
                     typeOfpayment:{
                         cash:document.getElementById('cash').value,
@@ -95,7 +97,7 @@
                 var request = new XMLHttpRequest();
                 request.open('POST','http://localhost:3000/issue', true);
                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                request.onreadystatechange = function() {if (request.readyState==4) alert("It worked!");
+                request.onreadystatechange = function() {if (request.readyState==4)
                     stateChanged(request);
                 };
                 

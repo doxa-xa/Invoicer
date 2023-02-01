@@ -31,9 +31,13 @@ router.get('/logout',(req,res)=>{
     res.redirect('/login')
 })
 router.get('/issue',(req,res)=>{
-    res.render('issue',{
-        uic:req.query.uic
+    Invoice.find({},(err,invNum)=>{
+        res.render('issue',{
+            uic:req.query.uic,
+            number:invNum.length.toString().padStart(10,'0')
+        })
     })
+   
 })
 router.get('/register',(req,res)=>{
     res.render('register')
@@ -63,6 +67,14 @@ router.get('/invoice',(req,res)=>{
 router.get('/unauthorised',(req,res,next)=>{
     res.send('<h1>Username or password is invalid. You can try again <a href="/login">here</a></h1>')
 })
+router.get('/final',(req,res)=>{
+    Invoice.findOne({sort:{'created_at':-1}},(err,result)=>{
+        res.render('final',{
+            data:result
+        })
+    })
+})
+
 //----------- POST request
 router.post('/login',passport.authenticate('local',{
     failureRedirect:'/unauthorised',
@@ -115,8 +127,8 @@ router.post('/register',(req,res,next)=>{
             Client.findOne({uic:inv.clientUIC})
             .then((client)=>{
                 const invoice = new Invoice({
-                    number:calc.number(inv.uic),
                     issueDate:inv.date,
+                    invoiceNumber:inv.number,
                     placeOfDeal:inv.placeOfDeal,
                     paymentType:calc.paymentType(inv.cash),
                     items:inv.items,
@@ -137,12 +149,14 @@ router.post('/register',(req,res,next)=>{
                 })
                 invoice.save()
                 .then((result)=>{
-                    console.log(result)
-                    res.render('final')
+                    console.log(`Invoice: ${result.invoiceNumber} has been saved`)
+                    res.send(`<p>Invoice: ${result.invoiceNumber} has been saved <a href="/final">continue</a></p>`)
+                    
                 })
             })
         })
-
+        
+       
         //console.log(JSON.parse(Object.keys(req.body)[0]))
     })
 } //<==== END OF ROUTER EXPORT SCOPE!!!!
